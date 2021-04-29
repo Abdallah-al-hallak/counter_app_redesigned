@@ -1,5 +1,8 @@
+import 'package:counter_app_redesigned/logic/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 /// the concept of the widget inspired
 /// from [Nikolay Kuchkarov](https://dribbble.com/shots/3368130-Stepper-Touch).
@@ -51,7 +54,7 @@ class _Stepper2State extends State<Counter>
   Widget build(BuildContext context) {
     return FittedBox(
       child: Container(
-        width: 200.0,
+        width: SizerUtil.deviceType == DeviceType.tablet ? 40.0.w : 55.0.w,
         height: 120.0,
         child: Material(
           type: MaterialType.canvas,
@@ -131,9 +134,11 @@ class _Stepper2State extends State<Counter>
 
     bool changed = false;
     if (_controller.value <= -0.20) {
+      context.read<CounterCubit>().devrement();
       //setState(() => isHor ? _value-- : _value++);
       changed = true;
     } else if (_controller.value >= 0.20) {
+      context.read<CounterCubit>().increment();
       //setState(() => isHor ? _value++ : _value--);
       // changed = true;
     }
